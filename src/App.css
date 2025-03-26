@@ -87,3 +87,12 @@ th {
 .query-display h4 {
   margin-bottom: 5px;
 }
+
+.header{
+  background-color: #282c34;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-family:cursive;
+  border-radius: 10px;
+}

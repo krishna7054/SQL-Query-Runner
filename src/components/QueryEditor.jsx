@@ -1,10 +1,30 @@
 // components/QueryEditor.jsx
-import React from 'react';
+import React, { useState } from 'react';
 
 function QueryEditor({ value, onChange, onSubmit }) {
+  // State to track if the query has been copied
+  const [isCopied, setIsCopied] = useState(false);
+
+  // Handle Ctrl+Enter to run the query
   const handleKeyDown = (e) => {
     if (e.ctrlKey && e.key === 'Enter') {
       onSubmit();
+    }
+  };
+
+  // Handle the copy button click
+  const handleCopy = () => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(value)
+        .then(() => {
+          setIsCopied(true); // Update button text to "Copied!"
+          setTimeout(() => setIsCopied(false), 1000); // Revert after 1 second
+        })
+        .catch(err => {
+          console.error('Failed to copy:', err);
+        });
+    } else {
+      console.warn('Clipboard API not supported');
     }
   };
 
@@ -19,6 +39,9 @@ function QueryEditor({ value, onChange, onSubmit }) {
         rows={5}
       />
       <button onClick={onSubmit}>Run Query</button>
+      <button onClick={handleCopy} title="Copy query to clipboard">
+        {isCopied ? 'Copied!' : 'Copy Query'}
+      </button>
     </div>
   );
 }

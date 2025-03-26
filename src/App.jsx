@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import QueryEditor from './components/QueryEditor';
-import ResultsTable from './components/ResultsTable';
-import QuerySelector from './components/QuerySelector';
-import QueryHistory from './components/QueryHistory'; // New component
+import QueryEditor from './components/QueryEditor.jsx';
+import ResultsTable from './components/ResultsTable.jsx';
+import QuerySelector from './components/QuerySelector.jsx';
+import QueryHistory from './components/QueryHistory.jsx'; // New component
 import './App.css';
 
 // Sample CSV data (replace with your actual data)
@@ -113,7 +113,7 @@ function App() {
 
   return (
     <div className="app-container">
-      <h1>SQL Query Runner</h1>
+      <h1 className="header">SQL Query Runner</h1>
       <div className="main-layout">
         <div className="query-section">
           <QuerySelector 
