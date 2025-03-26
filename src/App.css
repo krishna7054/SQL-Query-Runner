@@ -1,49 +1,67 @@
 /* App.css */
 .app-container {
+  padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
 }
 
 .main-layout {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
+  display: flex;
   gap: 20px;
 }
 
 .query-section {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  flex: 1;
+  min-width: 300px;
 }
 
-.query-editor textarea {
-  width: 100%;
-  padding: 10px;
-  font-family: monospace;
-  resize: vertical;
+.results-table {
+  flex: 2;
 }
 
-.query-editor button {
-  margin-top: 10px;
+.query-history {
+  margin-top: 20px;
+}
+
+.query-history h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.query-history ul {
+  list-style: none;
+  padding: 0;
+}
+
+.query-history li {
+  cursor: pointer;
+  padding: 5px;
+  border-bottom: 1px solid #ddd;
+}
+
+.query-history li:hover {
+  background-color: #f0f0f0;
+}
+
+.results-info {
+  margin-bottom: 10px;
+}
+
+.results-table button {
+  margin-bottom: 10px;
   padding: 8px 16px;
-  background-color: #007bff;
+  background-color: #28a745;
   color: white;
   border: none;
   cursor: pointer;
 }
 
-.query-selector select {
-  width: 100%;
-  padding: 8px;
-}
-
-.results-table {
-  overflow-x: auto;
+.results-table button:hover {
+  background-color: #218838;
 }
 
 .table-container {
-  max-height: 600px;
+  max-height: 400px;
   overflow-y: auto;
 }
 
@@ -59,13 +77,13 @@ th, td {
 }
 
 th {
-  background-color: #f5f5f5;
-  position: sticky;
-  top: 0;
+  background-color: #f4f4f4;
 }
 
 .query-display {
-  font-style: italic;
-  margin-bottom: 10px;
-  color: #666;
+  margin-bottom: 20px;
+}
+
+.query-display h4 {
+  margin-bottom: 5px;
 }
