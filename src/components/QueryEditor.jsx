@@ -29,19 +29,23 @@ function QueryEditor({ value, onChange, onSubmit }) {
   };
 
   return (
+    <div>
+      <h2 className='header1'>Custom Query</h2>
     <div className="query-editor">
-      <h3>Custom Query</h3>
-      <textarea
+      <div className='query-buttons'>
+      <button className='toggle-history-btn1' onClick={onSubmit}>Run Query</button>
+      <button className='toggle-history-btn1' onClick={handleCopy} title="Copy query to clipboard">
+        {isCopied ? 'Copied!' : 'Copy Query'}
+      </button>
+      </div>
+      <textarea className='query-input'
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="Enter your SQL query here (Press Ctrl+Enter to run)"
         rows={5}
       />
-      <button onClick={onSubmit}>Run Query</button>
-      <button onClick={handleCopy} title="Copy query to clipboard">
-        {isCopied ? 'Copied!' : 'Copy Query'}
-      </button>
+    </div>
     </div>
   );
 }

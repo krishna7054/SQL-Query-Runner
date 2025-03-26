@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import QueryEditor from './components/QueryEditor.jsx';
 import ResultsTable from './components/ResultsTable.jsx';
 import QuerySelector from './components/QuerySelector.jsx';
-import QueryHistory from './components/QueryHistory.jsx'; // New component
+import QueryHistory from './components/QueryHistory.jsx';
 import './App.css';
 
-// Sample CSV data (replace with your actual data)
+// Sample CSV data
 const csvData = [
   ['employeeID', 'lastName', 'firstName', 'title', 'country'],
   ['1', 'Davolio', 'Nancy', 'Sales Representative', 'USA'],
@@ -35,24 +35,12 @@ const employeeData = {
 };
 
 const predefinedQueries = [
-  {
-    id: 1,
-    text: 'SELECT * FROM employees WHERE title = "Sales Representative"',
-    dataKey: 'salesReps'
-  },
-  {
-    id: 2,
-    text: 'SELECT * FROM employees WHERE country = "UK"',
-    dataKey: 'ukEmployees'
-  },
-  {
-    id: 3,
-    text: 'SELECT * FROM employees ORDER BY employeeID',
-    dataKey: 'allEmployees'
-  }
+  { id: 1, text: 'SELECT * FROM employees WHERE title = "Sales Representative"', dataKey: 'salesReps' },
+  { id: 2, text: 'SELECT * FROM employees WHERE country = "UK"', dataKey: 'ukEmployees' },
+  { id: 3, text: 'SELECT * FROM employees ORDER BY employeeID', dataKey: 'allEmployees' }
 ];
 
-// Query parser (simplified; adjust to match your implementation)
+// Query parser
 const parseCustomQuery = (query, data) => {
   if (!query) return data.allEmployees;
   let result = [...data.allEmployees];
@@ -81,7 +69,8 @@ function App() {
   const [selectedQuery, setSelectedQuery] = useState(predefinedQueries[0]);
   const [customQuery, setCustomQuery] = useState('');
   const [customResults, setCustomResults] = useState(null);
-  const [queryHistory, setQueryHistory] = useState([]); // New state for query history
+  const [queryHistory, setQueryHistory] = useState([]);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false); // New state for sidebar
 
   const handleQuerySelect = (queryId) => {
     const query = predefinedQueries.find(q => q.id === queryId);
@@ -102,10 +91,14 @@ function App() {
       dataKey: null
     });
 
-    // Add to history (keep unique and limit to 10)
+    // Add to history with timestamp and row count
     setQueryHistory(prev => {
-      const newHistory = [query, ...prev.filter(q => q !== query)];
-      return newHistory.slice(0, 10);
+      const newEntry = {
+        query,
+        timestamp: new Date().toLocaleString(),
+        rowCount: results.length
+      };
+      return [newEntry, ...prev.filter(item => item.query !== query)].slice(0, 10);
     });
   };
 
@@ -126,15 +119,24 @@ function App() {
             onChange={setCustomQuery}
             onSubmit={() => handleCustomQuerySubmit()}
           />
-          <QueryHistory 
-            history={queryHistory} 
-            onSelect={handleCustomQuerySubmit} 
+          <button 
+            className="toggle-history-btn" 
+            onClick={() => setIsHistoryOpen(!isHistoryOpen)}
+          >
+            {isHistoryOpen ? 'Hide History' : 'Show History'}
+          </button>
+          <ResultsTable 
+            data={displayedData}
+            query={selectedQuery.text}
           />
         </div>
-        <ResultsTable 
-          data={displayedData}
-          query={selectedQuery.text}
-        />
+        <div className={`query-history-sidebar ${isHistoryOpen ? 'open' : ''}`}>
+          <QueryHistory 
+            history={queryHistory} 
+            onSelect={handleCustomQuerySubmit}
+            onClose={() => setIsHistoryOpen(false)}
+          />
+        </div>
       </div>
     </div>
   );

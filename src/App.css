@@ -3,6 +3,7 @@
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
 }
 
 .main-layout {
@@ -19,33 +20,108 @@
   flex: 2;
 }
 
-.query-history {
-  margin-top: 20px;
+.query-history-sidebar {
+  position: fixed;
+  top: 0;
+  right: -320px; /* Hidden by default */
+  width: 300px;
+  height: 100%;
+  background-color: #f0f0f0;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: right 0.3s ease;
+  z-index: 1000;
 }
 
-.query-history h3 {
-  font-size: 1.2em;
-  margin-bottom: 10px;
+.query-history-sidebar.open {
+  right: 0; /* Slide in when open */
 }
 
-.query-history ul {
+.query-history-content {
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.query-history-content .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.query-history-content ul {
   list-style: none;
   padding: 0;
 }
 
-.query-history li {
+.query-history-content li {
   cursor: pointer;
-  padding: 5px;
+  padding: 10px;
   border-bottom: 1px solid #ddd;
 }
 
-.query-history li:hover {
-  background-color: #f0f0f0;
+.query-history-content li:hover {
+  background-color: #e0e0e0;
 }
 
-.results-info {
-  margin-bottom: 10px;
+.query-history-content .timestamp {
+  font-size: 0.8em;
+  color: #666;
 }
+
+.query-history-content .query-text {
+  margin: 5px 0;
+  word-wrap: break-word;
+}
+
+.query-history-content .row-count {
+  font-size: 0.8em;
+  color: #888;
+}
+
+/* .btn{
+  
+  border: none;
+  color: white;
+  padding: 8px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  
+} */
+
+.query-buttons{
+  display: grid;;
+}
+.toggle-history-btn {
+  /* margin-bottom: 10px; */
+  padding: 8px 16px;
+  
+  color: black;
+  
+  cursor: pointer;
+}
+.query-editor{
+  display: flex;
+  justify-content: space-between;
+}
+
+.toggle-history-btn1 {
+  margin-bottom: 10px;
+  padding: 8px 16px;
+  
+  color: black;
+  
+  cursor: pointer;
+}
+
+
+
+/* .toggle-history-btn:hover {
+  background-color: #0056b3;
+} */
 
 .results-table button {
   margin-bottom: 10px;
@@ -88,11 +164,106 @@ th {
   margin-bottom: 5px;
 }
 
-.header{
+.header {
   background-color: #282c34;
   color: white;
   padding: 10px;
   text-align: center;
-  font-family:cursive;
+  font-family: cursive;
   border-radius: 10px;
 }
+
+/* From Uiverse.io by ShadowShahriar */ 
+.toggle-history-btn, .toggle-history-btn1 {
+  background: none;
+  
+  --border-radius: 15px;
+  --border-width: 4px;
+  appearance: none;
+  position: relative;
+  /* padding: 1em 2em; */
+  border: 0;
+  margin-left: 5px;
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #000;
+  z-index: 2;
+ }
+ 
+ .toggle-history-btn::after, .toggle-history-btn1::after {
+  --m-i: linear-gradient(#000, #000);
+  --m-o: content-box, padding-box;
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: var(--border-width);
+  border-radius: var(--border-radius);
+  background-image: conic-gradient(
+     #488cfb,
+     #29dbbc,
+     #ddf505,
+     #ff9f0e,
+     #e440bb,
+     #655adc,
+     #488cfb
+   );
+  -webkit-mask-image: var(--m-i), var(--m-i);
+  mask-image: var(--m-i), var(--m-i);
+  -webkit-mask-origin: var(--m-o);
+  mask-origin: var(--m-o);
+  -webkit-mask-clip: var(--m-o);
+  mask-composite: exclude;
+  -webkit-mask-composite: destination-out;
+  filter: hue-rotate(0);
+  animation: rotate-hue linear 500ms infinite;
+  animation-play-state: paused;
+ }
+ 
+ .toggle-history-btn:hover::after,.toggle-history-btn1:hover::after {
+  animation-play-state: running;
+ }
+ 
+ @keyframes rotate-hue {
+  to {
+   filter: hue-rotate(1turn);
+  }
+ }
+ 
+ .toggle-history-btn,.toggle-history-btn1,
+ .toggle-history-btn::after,.toggle-history-btn1::after {
+  box-sizing: border-box;
+ }
+ 
+ .toggle-history-btn:active, .toggle-history-btn1:active {
+  --border-width: 5px;
+ }
+
+ .query-input{
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  
+ }
+
+ .header1{
+  /* border: #488cfb solid 2px; */
+  border-bottom: #0a0d11 solid 2px;
+  color: rgb(189, 20, 20);
+  padding: 10px;
+  text-align: center;
+  font-family: cursive;
+  /* border-radius: 10px; */
+  text-underline-position: under;
+  text-decoration: underline;
+  text-decoration-color: #488cfb;
+  text-decoration-thickness: 2px;
+  text-decoration-style: double;
+  text-decoration-skip-ink: none;
+  text-decoration-skip-ink: auto;
+ }

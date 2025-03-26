@@ -1,10 +1,11 @@
 // components/QuerySelector.jsx
 import React from 'react';
 
+
 function QuerySelector({ queries, onQuerySelect, selectedQueryId }) {
   return (
     <div className="query-selector">
-      <h3>Predefined Queries</h3>
+      <h2 className='header1'>Predefined Queries</h2>
       <select 
         value={selectedQueryId}
         onChange={(e) => onQuerySelect(parseInt(e.target.value))}
