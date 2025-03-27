@@ -7,6 +7,7 @@ function QuerySelector({ queries, onQuerySelect, selectedQueryId }) {
     <div className="query-selector">
       <h2 className='header1'>Predefined Queries</h2>
       <select 
+      className='drop-down'
         value={selectedQueryId}
         onChange={(e) => onQuerySelect(parseInt(e.target.value))}
       >

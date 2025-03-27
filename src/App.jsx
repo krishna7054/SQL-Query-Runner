@@ -109,11 +109,6 @@ function App() {
       <h1 className="header">SQL Query Runner</h1>
       <div className="main-layout">
         <div className="query-section">
-          <QuerySelector 
-            queries={predefinedQueries}
-            onQuerySelect={handleQuerySelect}
-            selectedQueryId={selectedQuery.id}
-          />
           <QueryEditor
             value={customQuery}
             onChange={setCustomQuery}
@@ -125,6 +120,11 @@ function App() {
           >
             {isHistoryOpen ? 'Hide History' : 'Show History'}
           </button>
+          <QuerySelector 
+            queries={predefinedQueries}
+            onQuerySelect={handleQuerySelect}
+            selectedQueryId={selectedQuery.id}
+          />
           <ResultsTable 
             data={displayedData}
             query={selectedQuery.text}

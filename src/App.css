@@ -1,6 +1,6 @@
 /* App.css */
 .app-container {
-  padding: 20px;
+  /* padding: 1px; */
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
@@ -9,6 +9,7 @@
 .main-layout {
   display: flex;
   gap: 20px;
+  /* padding: 30px; */
 }
 
 .query-section {
@@ -189,6 +190,7 @@ th {
   font-weight: 500;
   color: #000;
   z-index: 2;
+  
  }
  
  .toggle-history-btn::after, .toggle-history-btn1::after {
@@ -244,10 +246,16 @@ th {
 
  .query-input{
   width: 80%;
+  height: 100px;
   padding: 10px;
   margin-bottom: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #203570;
   border-radius: 5px;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  box-shadow:  20px 20px 60px #c6c2c2,
+             -20px -20px 60px #f3f3f3;
+
   
  }
 
@@ -266,4 +274,22 @@ th {
   text-decoration-style: double;
   text-decoration-skip-ink: none;
   text-decoration-skip-ink: auto;
+  
  }
+
+.drop-down{
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
+  border: 1px solid #203570;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  box-shadow:  20px 20px 60px #c6c2c2,
+             -20px -20px 60px #f3f3f3;
+  
+
+}
