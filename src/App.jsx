@@ -47,27 +47,36 @@ const parseCustomQuery = (query, data) => {
   const normalizedQuery = query.toLowerCase().trim();
   let result = [...data.allEmployees];
 
-  console.log('Normalized Query:', normalizedQuery); // Debug query
+  console.log('Normalized Query:', normalizedQuery);
 
   const whereMatch = normalizedQuery.match(/where\s+(.+?)(?:\s+order\s+by|$)/i);
   const orderByMatch = normalizedQuery.match(/order\s+by\s+(.+)$/i);
 
+  // Define field name mapping for normalization
+  const fieldNameMap = {
+    'employeeid': 'employeeID',
+    'lastname': 'lastName',
+    'firstname': 'firstName',
+    'title': 'title', // Already matches, no change needed
+    'country': 'country' // Already matches, no change needed
+  };
+
   if (whereMatch) {
     const conditions = whereMatch[1].split(/\s+and\s+/i);
-    console.log('Conditions:', conditions); // Debug conditions
+    console.log('Conditions:', conditions);
 
     result = result.filter(employee => {
       return conditions.every(condition => {
-        const match = condition.match(/(\w+)\s*(=|>|<|like)\s*(['"]?[^'"]+['"]?)$/i);
+        const match = condition.match(/(\w+)\s*(=|>|<|like)\s*(['"]?.*?['"]?)$/i);
         if (!match) {
           console.log(`Invalid condition: ${condition}`);
           return true;
         }
 
         const [_, field, operator, value] = match;
-        // Normalize field name to match dataset's camelCase
-        const normalizedField = field.toLowerCase() === 'employeeid' ? 'employeeID' : field;
-        console.log(`Field: ${field}, Normalized: ${normalizedField}, Operator: ${operator}, Value: ${value}`); // Debug field normalization
+        // Normalize field name using the map
+        const normalizedField = fieldNameMap[field.toLowerCase()] || field;
+        console.log(`Field: ${field}, Normalized: ${normalizedField}, Operator: ${operator}, Value: ${value}`);
 
         const fieldValue = employee[normalizedField];
         if (fieldValue === undefined) {
@@ -105,8 +114,8 @@ const parseCustomQuery = (query, data) => {
 
   if (orderByMatch) {
     const [field, direction = 'asc'] = orderByMatch[1].split(/\s+/);
-    const normalizedField = field.toLowerCase() === 'employeeid' ? 'employeeID' : field;
-    console.log(`Order by field: ${field}, Normalized: ${normalizedField}, Direction: ${direction}`); // Debug order by
+    const normalizedField = fieldNameMap[field.toLowerCase()] || field;
+    console.log(`Order by field: ${field}, Normalized: ${normalizedField}, Direction: ${direction}`);
     result.sort((a, b) => {
       const aValue = a[normalizedField];
       const bValue = b[normalizedField];
