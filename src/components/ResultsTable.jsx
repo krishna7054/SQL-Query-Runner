@@ -26,7 +26,7 @@ function ResultsTable({ data, query }) {
     <div className="results-table">
       <h2 className='header1'>Query Results</h2>
       <div className="query-display">
-        <h4>Query:</h4>
+        <h4 className='header2'>Query:</h4>
         <SyntaxHighlighter language="sql" style={dark}>
           {query}
         </SyntaxHighlighter>

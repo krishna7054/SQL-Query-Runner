@@ -293,3 +293,11 @@ th {
   
 
 }
+
+.header2{
+  font-family: cursive;
+  color: #488cfb;
+  /* text-align: center; */
+  font-size: 20px;
+  margin-top: 20px;
+}
