@@ -1,30 +1,30 @@
 /* App.css */
 .app-container {
-  /* padding: 1px; */
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
+  padding: 20px;
 }
 
 .main-layout {
   display: flex;
   gap: 20px;
-  /* padding: 30px; */
 }
 
 .query-section {
   flex: 1;
-  min-width: 300px;
+  min-width: 0;
 }
 
 .results-table {
   flex: 2;
+  min-width: 0;
 }
 
 .query-history-sidebar {
   position: fixed;
   top: 0;
-  right: -320px; /* Hidden by default */
+  right: -320px; 
   width: 300px;
   height: 100%;
   background-color: #f0f0f0;
@@ -34,7 +34,7 @@
 }
 
 .query-history-sidebar.open {
-  right: 0; /* Slide in when open */
+  right: 0; 
 }
 
 .query-history-content {
@@ -80,29 +80,17 @@
   color: #888;
 }
 
-/* .btn{
-  
-  border: none;
-  color: white;
-  padding: 8px 8px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  cursor: pointer;
-  
-} */
+
 
 .query-buttons{
-  display: grid;;
+  display: grid;
 }
 .toggle-history-btn {
-  /* margin-bottom: 10px; */
   padding: 8px 16px;
-  
   color: black;
   font-weight: bold;
   cursor: pointer;
+  /* margin: 10px 0; */
 }
 .query-editor{
   display: flex;
@@ -112,30 +100,10 @@
 .toggle-history-btn1 {
   margin-bottom: 10px;
   padding: 8px 16px;
-  
   color: black;
-  ;
   cursor: pointer;
 }
 
-
-
-/* .toggle-history-btn:hover {
-  background-color: #0056b3;
-} */
-
-/* .results-table button {
-  margin-bottom: 10px;
-  padding: 8px 16px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.results-table button:hover {
-  background-color: #218838;
-} */
 
 .table-container {
   max-height: 400px;
@@ -175,15 +143,13 @@ th {
   border-radius: 10px;
 }
 
-/* From Uiverse.io by ShadowShahriar */ 
+
 .toggle-history-btn, .toggle-history-btn1 {
   background: none;
-  
   --border-radius: 15px;
   --border-width: 4px;
   appearance: none;
   position: relative;
-  /* padding: 1em 2em; */
   border: 0;
   margin-left: 5px;
   font-family: "Poppins", sans-serif;
@@ -250,29 +216,25 @@ th {
   height: 100px;
   padding: 10px;
   margin-bottom: 10px;
+  /* margin-left: 50px; */
   border: 1px solid #203570;
   border-radius: 5px;
   font-size: 16px;
   font-family: "Poppins", sans-serif;
-  
-
+  box-sizing: border-box;
   
  }
 
  .header1{
-  /* border: #488cfb solid 2px; */
   border-bottom: #0a0d11 solid 2px;
   color: rgb(189, 20, 20);
   padding: 10px;
   text-align: center;
   font-family: cursive;
-  /* border-radius: 10px; */
-  text-underline-position: under;
   text-decoration: underline;
   text-decoration-color: #488cfb;
   text-decoration-thickness: 2px;
   text-decoration-style: double;
-  text-decoration-skip-ink: none;
   text-decoration-skip-ink: auto;
   
  }
@@ -296,7 +258,6 @@ th {
 .header2{
   font-family: cursive;
   color: #488cfb;
-  /* text-align: center; */
   font-size: 20px;
   margin-top: 20px;
 }
@@ -309,11 +270,10 @@ p{
 .par{
  display: flex;
   justify-content: space-between;
-  
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 10px;
 }
-
-
-/* From Uiverse.io by andrew-demchenk0 */ 
+ 
 .button {
   position: relative;
   width: 150px;
@@ -379,7 +339,111 @@ p{
 .foot{
   display: flex;
   justify-content: center;
-  /* margin-top: 10px; */
   border-top: #9e8f30 solid 2px;
   padding-top: 10px;
+}
+
+/* Desktop (1200px and below) */
+@media (max-width: 1200px) {
+  .app-container {
+    padding: 15px;
+  }
+  .query-history-sidebar {
+    width: 250px;
+  }
+  .query-history-sidebar.open {
+    right: 0;
+  }
+}
+
+/* Laptop (1024px and below) */
+@media (max-width: 1024px) {
+  .main-layout {
+    flex-direction: column; /* Stack query-section and results vertically */
+  }
+  .query-section, .results-table {
+    flex: none;
+    width: 100%;
+  }
+  .query-history-sidebar {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+/* Tablet (768px and below) */
+@media (max-width: 768px) {
+  .query-input {
+    height: 80px;
+    font-size: 14px;
+  }
+  .toggle-history-btn, .toggle-history-btn1 {
+    font-size: 16px;
+    padding: 6px 12px;
+  }
+  .header1 {
+    font-size: 1.2em;
+  }
+  .header2 {
+    font-size: 18px;
+  }
+  .drop-down {
+    max-width: 250px;
+  }
+  .button {
+    width: 120px;
+    height: 35px;
+  }
+  .button .button__text {
+    font-size: 14px;
+  }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+  .app-container {
+    padding: 10px;
+  }
+  .header {
+    font-size: 1.5em;
+  }
+  .query-buttons {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .query-input {
+    height: 60px;
+    font-size: 12px;
+  }
+  .toggle-history-btn, .toggle-history-btn1 {
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+  .header1 {
+    font-size: 1em;
+  }
+  .header2 {
+    font-size: 16px;
+  }
+  .drop-down {
+    max-width: 200px;
+    font-size: 14px;
+  }
+  .par {
+    flex-direction: row;
+    align-items: flex-start;
+    /* margin-bottom: 5px; */
+  }
+  .button {
+    width: 100%;
+    max-width: 150px;
+  }
+  th, td {
+    font-size: 12px;
+    padding: 6px;
+  }
+  .query-history-sidebar {
+    width: 100%;
+    /* max-width: none; */
+  }
 }
