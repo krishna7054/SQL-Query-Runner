@@ -138,6 +138,7 @@ function App() {
           />
         </div>
       </div>
+      <footer className='foot'>© 2025 All rights reserved. - Krishna Kumar</footer>
     </div>
   );
 }
