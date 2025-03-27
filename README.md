@@ -4,6 +4,11 @@ SQL Query Runner is a web application designed to simulate running SQL-like quer
 
 - Predefined Queries: Users can select from a dropdown of prewritten queries to view filtered datasets.
 - Custom Queries: A query editor enables users to write and execute custom SQL-like queries.
+  ### Exmaple of Custom Queries:
+```bash
+    SELECT * FROM employees WHERE employeeID >2 AND employeeID<6
+    SELECT * FROM employees WHERE employeeID > 2 AND country = 'UK'
+```
 - Query History: A collapsible sidebar tracks recent custom queries with timestamps and row counts.
 - Results Display: Results are shown in a table with syntax-highlighted queries and an option to export as CSV.
 - Responsive Design: The app adapts seamlessly to desktop, laptop, tablet, and mobile devices.
