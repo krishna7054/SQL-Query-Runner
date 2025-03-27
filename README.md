@@ -4,11 +4,17 @@ SQL Query Runner is a web application designed to simulate running SQL-like quer
 
 - Predefined Queries: Users can select from a dropdown of prewritten queries to view filtered datasets.
 - Custom Queries: A query editor enables users to write and execute custom SQL-like queries.
+  ### Exmaple of Custom Queries:
+```bash
+    SELECT * FROM employees WHERE employeeID >2 AND employeeID<6
+    SELECT * FROM employees WHERE employeeID > 2 AND country = 'UK'
+```
 - Query History: A collapsible sidebar tracks recent custom queries with timestamps and row counts.
 - Results Display: Results are shown in a table with syntax-highlighted queries and an option to export as CSV.
 - Responsive Design: The app adapts seamlessly to desktop, laptop, tablet, and mobile devices.
 The project uses a static dataset of employee information (e.g., ID, name, title, country) parsed from a CSV-like structure, making it lightweight and easy to deploy.
 
+### Live: [https://sql-query-runner-three.vercel.app/](https://sql-query-runner-three.vercel.app/)
 
 ## JavaScript Framework and Packages
 The application is built using React, a popular JavaScript library for building user interfaces. React’s component-based architecture and state management capabilities make it ideal for this interactive app. Key packages and plugins installed include:
@@ -84,3 +90,10 @@ npm run build
 - Enter a custom query in the editor and press "Run Query" or Ctrl+Enter.
 - Toggle the query history sidebar with "Show History" to review and rerun past queries.
 - Export results to CSV using the button in the results table.
+
+## Preview
+<p>
+    <img src="https://github.com/user-attachments/assets/de06d865-4c65-4a37-a8d0-3392d3e04560" width=45% height = 300/>
+    <img src="https://github.com/user-attachments/assets/f30be8a2-dcfc-47de-926e-256f09ec157d" width=45% height = 300/>
+</p>
+
