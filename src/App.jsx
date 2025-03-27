@@ -43,25 +43,84 @@ const predefinedQueries = [
 // Query parser
 const parseCustomQuery = (query, data) => {
   if (!query) return data.allEmployees;
-  let result = [...data.allEmployees];
+
   const normalizedQuery = query.toLowerCase().trim();
+  let result = [...data.allEmployees];
 
-  if (normalizedQuery.includes('where')) {
-    const condition = normalizedQuery.split('where')[1].trim();
-    if (condition.includes('title')) {
-      const value = condition.split('=')[1].trim().replace(/['"]/g, '');
-      result = result.filter(row => row.title.toLowerCase() === value);
-    } else if (condition.includes('country')) {
-      const value = condition.split('=')[1].trim().replace(/['"]/g, '');
-      result = result.filter(row => row.country.toLowerCase() === value);
-    }
+  console.log('Normalized Query:', normalizedQuery); // Debug query
+
+  const whereMatch = normalizedQuery.match(/where\s+(.+?)(?:\s+order\s+by|$)/i);
+  const orderByMatch = normalizedQuery.match(/order\s+by\s+(.+)$/i);
+
+  if (whereMatch) {
+    const conditions = whereMatch[1].split(/\s+and\s+/i);
+    console.log('Conditions:', conditions); // Debug conditions
+
+    result = result.filter(employee => {
+      return conditions.every(condition => {
+        const match = condition.match(/(\w+)\s*(=|>|<|like)\s*(['"]?[^'"]+['"]?)$/i);
+        if (!match) {
+          console.log(`Invalid condition: ${condition}`);
+          return true;
+        }
+
+        const [_, field, operator, value] = match;
+        // Normalize field name to match dataset's camelCase
+        const normalizedField = field.toLowerCase() === 'employeeid' ? 'employeeID' : field;
+        console.log(`Field: ${field}, Normalized: ${normalizedField}, Operator: ${operator}, Value: ${value}`); // Debug field normalization
+
+        const fieldValue = employee[normalizedField];
+        if (fieldValue === undefined) {
+          console.log(`Field not found: ${normalizedField} in employee:`, employee);
+          return false;
+        }
+
+        const cleanValue = value.replace(/['"]/g, '').trim();
+
+        if (operator === '>' || operator === '<') {
+          const numField = Number(fieldValue);
+          const numValue = Number(cleanValue);
+          if (isNaN(numField) || isNaN(numValue)) {
+            console.log(`Invalid number conversion: ${fieldValue}, ${cleanValue}`);
+            return false;
+          }
+          return operator === '>' ? numField > numValue : numField < numValue;
+        }
+
+        const stringFieldValue = String(fieldValue).toLowerCase();
+        const stringCleanValue = cleanValue.toLowerCase();
+
+        switch (operator) {
+          case '=':
+            return stringFieldValue === stringCleanValue;
+          case 'like':
+            return stringFieldValue.includes(stringCleanValue.replace(/%/g, ''));
+          default:
+            console.log(`Unsupported operator: ${operator}`);
+            return true;
+        }
+      });
+    });
   }
 
-  if (normalizedQuery.includes('order by')) {
-    const field = normalizedQuery.split('order by')[1].trim();
-    result.sort((a, b) => a[field] > b[field] ? 1 : -1);
+  if (orderByMatch) {
+    const [field, direction = 'asc'] = orderByMatch[1].split(/\s+/);
+    const normalizedField = field.toLowerCase() === 'employeeid' ? 'employeeID' : field;
+    console.log(`Order by field: ${field}, Normalized: ${normalizedField}, Direction: ${direction}`); // Debug order by
+    result.sort((a, b) => {
+      const aValue = a[normalizedField];
+      const bValue = b[normalizedField];
+      if (aValue === undefined || bValue === undefined) return 0;
+      if (typeof aValue === 'number') {
+        return direction === 'desc' ? bValue - aValue : aValue - bValue;
+      }
+      return direction === 'desc'
+        ? String(bValue).localeCompare(String(aValue))
+        : String(aValue).localeCompare(String(bValue));
+    });
   }
 
+  console.log('Final Result:', result);
   return result;
 };
 
@@ -84,6 +143,7 @@ function App() {
     if (!query.trim()) return;
 
     const results = parseCustomQuery(query, employeeData);
+    console.log('Parsed Results:', results);
     setCustomResults(results);
     setSelectedQuery({
       id: 0,
@@ -143,4 +203,4 @@ function App() {
   );
 }
 
-export default App;
+export default React.memo(App);

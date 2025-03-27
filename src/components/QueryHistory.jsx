@@ -33,4 +33,4 @@ function QueryHistory({ history, onSelect, onClose }) {
   );
 }
 
-export default QueryHistory;
+export default React.memo(QueryHistory);
